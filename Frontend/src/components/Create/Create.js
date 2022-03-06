@@ -64,7 +64,7 @@ class Create extends Component{
                 <br/>
                 <div class="container" style={{width:"700px", margin: "0 auto"}}>
                     <form action="http://127.0.0.1:3000/create" method="post">
-                        <div class="form-group">
+                        <div className="form-group">
                             <input
                                 type="text"
                                 class="form-control"

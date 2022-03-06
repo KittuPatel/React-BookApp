@@ -15,7 +15,7 @@ app.use(session({
     secret              : 'cmpe273_kafka_passport_mongo',
     resave              : false, // Forces the session to be saved back to the session store, even if the session was never modified during the request
     saveUninitialized   : false, // Force to save uninitialized session to db. A session is uninitialized when it is new but not modified.
-    duration            : 60 * 60 * 1000,    // Overall duration of Session : 30 minutes : 1800 seconds
+    duration            : 60 * 60 * 1000, // Overall duration of Session : 30 minutes : 1800 seconds
     activeDuration      :  5 * 60 * 1000
 }));
 
@@ -110,13 +110,12 @@ app.post('/create',function (req, res) {
 app.post('/delete', function (req, res) {
     if (req.body.BookID) {
         let flag;
-        books.filter(book => {
-            if (book.BookID === req.body.BookID) {
-                flag = true;
-                books.splice(book, 1);
-                console.log("Book Deleted");
-            }
-        });
+        let bookData = books.filter(bookObj => bookObj.BookID === req.body.BookID);
+        if (bookData && bookData.length > 0) {
+            books = books.filter(bookObj => bookObj.BookID !== req.body.BookID);
+            flag = true;
+            console.log("Book Deleted");
+        }
         if (!flag) {
             res.writeHead(200, {
                 'Content-Type': 'text/plain'
